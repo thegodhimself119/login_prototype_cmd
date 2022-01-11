@@ -1,25 +1,26 @@
 import data
 
+def login():#acess from current database
 
-def login():  # acess from current database
-    log = str(input("do you want to login to your account?"))
-    logu = log.upper
-    if logu == "YES" or "Y":
-        data.username()
-    else:
-        return 0
+    data.login_after()
 
-
-def main():  # first question for login
+def main():#first question for login
     ques = str(input("what operation do you wanna perform?\n-create "
-                     "new account\n-login\n"))
-    if ques == "create new account":  # creation of data
-        data.collection()
+                     "new account\n-login\n -delete account\n"
+                     "-change password/username\n "))
+    if ques == "create new account": #creation of data
+        data.create_new()
 
     elif ques == "login":
         login()
 
+    elif ques == "delete account" or ques == "del" or ques == "delete":
+        data.delete()
 
-# start of the program
+    elif ques == "change password" or ques == "change " or ques == "change username":
+        data.change()
+
+#start of the program
 if __name__ == '__main__':
     main()
+
