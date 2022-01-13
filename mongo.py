@@ -13,4 +13,4 @@ collist = db.list_collection_names()#finding collection list
 for collist in collist:
     col = db[collist]
     dis = col.find_one({},{"_id":0} )
-    print("username:(",collist,")  ",dis)
+    print("username:",collist,"  ",dis)
