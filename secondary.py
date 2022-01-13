@@ -6,7 +6,7 @@ def login():#acess from current database
 
 def main():#first question for login
     ques = str(input("what operation do you wanna perform?\n-create "
-                     "new account\n-login\n -delete account\n"
+                     "new account\n-login\n-delete account\n"
                      "-change password/username\n "))
     if ques == "create new account": #creation of data
         data.create_new()

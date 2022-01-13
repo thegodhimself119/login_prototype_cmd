@@ -23,10 +23,11 @@ def create_new():#creation of new collection(account)
         if x == y:
             post = {"password": y} #creating a post called password
             coll.insert_one(post) #inserting the post in collection (one at a time)
+            print("account sucessfully created!")
+
         else:
             print("pls try again your password wasnt correct")
             create_new()
-    print("account sucessfully created!")
 
 
 def login_after():#login operation
@@ -63,7 +64,7 @@ def delete():
         else:
           print("wrong password ")
       else:
-          print("incorrect password!")
+          print("incorrect username")
 
 def change():
     username = print("what is your username? ")
