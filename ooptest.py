@@ -2,19 +2,22 @@ from pymongo import MongoClient
 import certifi
 
 
-ca = certifi.where()
-client = MongoClient("mongodb+srv://yubik:12345@cluster0.cklcq.mongodb.net/?retryWrites=true&w=majority", tlsCAFile=ca)
-db = client["database"]  # acess of current databaser
-collist = db.list_collection_names()  # finding collection list
-login = bool()
+
+class consts:
+    ca = certifi.where()
+    client = MongoClient("mongodb+srv://yubik:12345@cluster0.cklcq.mongodb.net/?retryWrites=true&w=majority",
+                         tlsCAFile=ca)
+    db = client["database"]  # acess of current databaser
+    collist = db.list_collection_names()  # finding collection list
+    login = bool()
 
 
 class operations:
 
     def create_new(self):
         x = str(input(" Enter username for you account "))
-        coll = db[x]  # acess the collection
-        if x in collist:
+        coll = consts.db[x]  # acess the collection
+        if x in consts.collist:
             print("this account already exists")
         else:
 
@@ -31,13 +34,13 @@ class operations:
 
     def login_after(self):
         x = str(input(" what is your user name? "))
-        col = db[x]  # decleration of collection x
+        col = consts.db[x]  # decleration of collection x
 
         find = col.find({})  # find existing collection
         for find in find:
             pw = find["password"]
 
-        if x in collist:  # if it's in collection
+        if x in consts.collist:  # if it's in collection
             y = str(input(" enter your password for account "))
             if y == pw:  # if pw is correct
                 print("you have sucessfully logged in\n\n")
@@ -50,8 +53,8 @@ class operations:
 
     def delete(self):
         username = input("enter your user name you want to delete ")
-        if username in collist:
-            col = db[username]
+        if username in consts.collist:
+            col = consts.db[username]
             pw = input("enter your password of your account if you wan't to delete ")
             find = col.find({})
             for find in find:
@@ -67,7 +70,7 @@ class operations:
 
 class logic:
 
-    def main(self):
+    def start(self):
         ques = str(input("what operation do you wanna perform?\n-create "
                          "new account\n-login\n-delete account\n"
                          "-change password/username\n "))
@@ -84,7 +87,27 @@ class logic:
         elif ques == "change password" or ques == "change " or ques == "change username":
             pass
 
+class queries:
 
+    def mongo(self):
+        for collist in consts.collist:
+            col = consts.db[collist]
+            dis = col.find_one({}, {"_id": 0})
+            print("username:", collist, "  ", dis)
+
+
+
+
+query = queries()
 o = operations()
-logic = logic()
-logic.main()
+log = logic()
+ques = input("do you want to run query or execute?\n")
+if ques == "query":
+    query.mongo()
+
+if ques =="execute":
+    log.start()
+
+
+
+
