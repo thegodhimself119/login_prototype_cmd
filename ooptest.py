@@ -1,13 +1,11 @@
 from pymongo import MongoClient
 import certifi
 
-
-
 class consts:
     ca = certifi.where()
     client = MongoClient("mongodb+srv://yubik:12345@cluster0.cklcq.mongodb.net/?retryWrites=true&w=majority",
                          tlsCAFile=ca)
-    db = client["database"]  # acess of current databaser
+    db = client["database"]  # access of current database
     collist = db.list_collection_names()  # finding collection list
     login = bool()
 
@@ -19,8 +17,8 @@ class operations:
         coll = consts.db[x]  # acess the collection
         if x in consts.collist:
             print("this account already exists")
-        else:
 
+        else:
             y = str(input("what will your password be?: "))
             x = str(input("reenter you pw"))
             if x == y:
@@ -31,6 +29,7 @@ class operations:
             else:
                 print("pls try again your password wasnt correct")
                 operations.create_new()
+
 
     def login_after(self):
         x = str(input(" what is your user name? "))
@@ -51,6 +50,7 @@ class operations:
         else:
             print("this username doesnt exist")
 
+
     def delete(self):
         username = input("enter your user name you want to delete ")
         if username in consts.collist:
@@ -66,6 +66,36 @@ class operations:
                 print("wrong password ")
         else:
             print("incorrect username")
+
+
+    def change(self):
+        username = input("input the username to change the password")
+        password = input("input the password")
+        col = consts.db[username]
+        find = col.find({})
+        for find in find:
+            pw = find["password"]
+
+        if username in consts.collist:
+            if password == pw:
+                query = {'password': password}
+                col.delete_one(query)
+                newpw = input("enter the new password for the account")
+                newpw2 = input("re-enter the password")
+
+                if newpw2 == newpw:
+                    post = {'password': newpw}
+                    col.insert_one(post)
+                    print("password sucessfully changed")
+
+                else:
+                    print("pls try again your password wasnt correct")
+
+            else:
+                print("incorrect pw")
+        else:
+            print("this username doesnt exist")
+
 
 
 class logic:
@@ -84,8 +114,8 @@ class logic:
         elif ques == "delete account" or ques == "del" or ques == "delete":
             o.delete()
 
-        elif ques == "change password" or ques == "change " or ques == "change username":
-            pass
+        elif ques == "change password" or ques == "change" or ques == "change username":
+            o.change()
 
 class queries:
 
@@ -95,7 +125,7 @@ class queries:
             find = col.find({})  # find existing collection
             for find in find:
                 pw = find["password"]
-                print("username:", collist, "// password: ", pw)
+                print("username:", collist, "| password: ", pw)
 
 
 
