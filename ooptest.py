@@ -101,12 +101,16 @@ class queries:
 query = queries()
 o = operations()
 log = logic()
-ques = input("do you want to run query or execute?\n")
-if ques == "query":
-    query.mongo()
+def main():
+    ques = input("do you want to run query or execute?\n")
+    if ques == "query":
+        query.mongo()
 
-if ques =="execute":
-    log.start()
+    if ques == "execute":
+        log.start()
+
+if __name__ == '__main__':
+    main()
 
 
 
