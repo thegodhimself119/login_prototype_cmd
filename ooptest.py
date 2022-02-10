@@ -70,13 +70,13 @@ class operations:
 
     def change(self):
         username = input("input the username to change the password")
-        password = input("input the password")
         col = consts.db[username]
         find = col.find({})
         for find in find:
             pw = find["password"]
 
         if username in consts.collist:
+            password = input("input the password")
             if password == pw:
                 query = {'password': password}
                 col.delete_one(query)
