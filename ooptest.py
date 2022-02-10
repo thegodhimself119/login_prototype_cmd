@@ -92,9 +92,10 @@ class queries:
     def mongo(self):
         for collist in consts.collist:
             col = consts.db[collist]
-            dis = col.find_one({}, {"_id": 0})
-            print("username:", collist, "  ", dis)
-
+            find = col.find({})  # find existing collection
+            for find in find:
+                pw = find["password"]
+                print("username:", collist, "// password: ", pw)
 
 
 

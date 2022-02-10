@@ -9,8 +9,9 @@ db = client["database"]#acess of current databaser
 collist = db.list_collection_names()#finding collection list
 
 
-
 for collist in collist:
     col = db[collist]
-    dis = col.find_one({},{"_id":0} )
-    print("username:",collist,"  ",dis)
+    find = col.find({})  # find existing collection
+    for find in find:
+        pw = find["password"]
+        print("username:",collist,"// password: ",pw)
