@@ -67,9 +67,31 @@ def delete():
           print("incorrect username")
 
 def change():
-    username = print("what is your username? ")
-    col =  db[username]
-    if col in collist:
-        ques = print("do you want to change password or username? ")
-        if ques == "password":
-            pass
+    username = input("input the username to change the password")
+    password = input("input the password")
+    col = db[username]
+    find = col.find({})
+    for find in find:
+        pw = find["password"]
+
+    if username in collist:
+        if password == pw:
+            query = {'password': password}
+            col.delete_one(query)
+            newpw = input("enter the new password for the account")
+            newpw2 = input("re-enter the password")
+
+            if newpw2 == newpw:
+                post = {'password': newpw}
+                col.insert_one(post)
+                print("password sucessfully changed")
+
+            else:
+                print("pls try again your password wasnt correct")
+
+        else:
+            print("incorrect pw")
+    else:
+        print("this username doesnt exist")
+
+
