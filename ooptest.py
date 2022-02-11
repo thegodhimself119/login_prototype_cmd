@@ -69,28 +69,36 @@ class operations:
 
 
     def change(self):
-        username = input("input the username to change the password")
+        username = input("input the username to change the password or username")
         col = consts.db[username]
         find = col.find({})
         for find in find:
             pw = find["password"]
 
         if username in consts.collist:
-            password = input("input the password")
+            password = input("input the password\n")
+            inp= input("do you want to change password or username?\n")
             if password == pw:
-                query = {'password': password}
+                if inp =="password":
+                    query = {'password': password}
+                    newpw = input("enter the new password for the account")
+                    newpw2 = input("re-enter the password")
 
-                newpw = input("enter the new password for the account")
-                newpw2 = input("re-enter the password")
+                    if newpw2 == newpw:
+                        post = {"$set": {'password': newpw}}
+                        col.update_one(query, post)
+                        print("password sucessfully changed")
 
-                if newpw2 == newpw:
-                    post = {"$set":{'password': newpw}}
-                    col.update_one(query,post)
-                    print("password sucessfully changed")
+                    else:
+                        print("pls try again your password wasnt correct")
 
-                else:
-                    print("pls try again your password wasnt correct")
-
+                elif inp == "username":
+                    col.drop()
+                    colname = input("enter your new username")
+                    uname = consts.db[colname]
+                    post = {'password':password}
+                    uname.insert_one(post)
+                    print("username sucessfully changed!")
             else:
                 print("incorrect pw")
         else:
