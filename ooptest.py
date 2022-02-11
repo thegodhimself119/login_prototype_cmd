@@ -79,13 +79,13 @@ class operations:
             password = input("input the password")
             if password == pw:
                 query = {'password': password}
-                col.delete_one(query)
+
                 newpw = input("enter the new password for the account")
                 newpw2 = input("re-enter the password")
 
                 if newpw2 == newpw:
-                    post = {'password': newpw}
-                    col.insert_one(post)
+                    post = {"$set":{'password': newpw}}
+                    col.update_one(query,post)
                     print("password sucessfully changed")
 
                 else:
