@@ -81,16 +81,21 @@ class operations:
             if password == pw:
                 if inp =="password":
                     query = {'password': password}
-                    newpw = input("enter the new password for the account")
-                    newpw2 = input("re-enter the password")
+                    act = 'false'
+                    while act == 'false':
+                        newpw = input("enter the new password for the account: ")
+                        newpw2 = input("re-enter the password: ")
 
-                    if newpw2 == newpw:
-                        post = {"$set": {'password': newpw}}
-                        col.update_one(query, post)
-                        print("password sucessfully changed")
+                        if newpw2 == newpw:
+                            post = {"$set": {'password': newpw}}
+                            col.update_one(query, post)
+                            print("password sucessfully changed!")
+                            act = 'true'
+                            break
 
-                    else:
-                        print("pls try again your password wasnt correct")
+                        else:
+                            print("pls try again your password wasnt correct")
+
 
                 elif inp == "username":
                     col.drop()
@@ -150,7 +155,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
 
 
